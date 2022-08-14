@@ -5,15 +5,13 @@ import 'dart:js' as js;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:webviewx/src/utils/logger.dart';
-import 'package:webviewx/src/utils/source_type.dart';
 import 'package:webviewx/src/utils/utils.dart';
 import 'package:webviewx/src/utils/web_history.dart';
 
 import 'package:webviewx/src/controller/interface.dart' as i;
 
 /// Web implementation
-class WebViewXController extends ChangeNotifier
-    implements i.WebViewXController<js.JsObject> {
+class WebViewXController extends ChangeNotifier implements i.WebViewXController<js.JsObject> {
   /// JsObject connector
   @override
   late js.JsObject connector;
@@ -63,8 +61,7 @@ class WebViewXController extends ChangeNotifier
   /// [SourceType] is [SourceType.urlBypass], which means it should
   /// use the proxy bypass to fetch the web page content.
   @override
-  bool get isCurrentContentURLBypass =>
-      value.sourceType == SourceType.urlBypass;
+  bool get isCurrentContentURLBypass => value.sourceType == SourceType.urlBypass;
 
   /// Set webview content to the specified `content`.
   /// Example: https://flutter.dev/

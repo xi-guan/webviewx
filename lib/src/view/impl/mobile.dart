@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:webviewx/src/utils/utils.dart';
 
@@ -42,8 +41,7 @@ class WebViewX extends StatefulWidget implements view_interface.WebViewX {
   /// Callback which returns a referrence to the [WebViewXController]
   /// being created.
   @override
-  final Function(ctrl_interface.WebViewXController controller)?
-      onWebViewCreated;
+  final Function(ctrl_interface.WebViewXController controller)? onWebViewCreated;
 
   /// A set of [EmbeddedJsContent].
   ///
@@ -119,8 +117,7 @@ class WebViewX extends StatefulWidget implements view_interface.WebViewX {
     this.dartCallBacks = const {},
     this.ignoreAllGestures = false,
     this.javascriptMode = JavascriptMode.unrestricted,
-    this.initialMediaPlaybackPolicy =
-        AutoMediaPlaybackPolicy.requireUserActionForAllMediaTypes,
+    this.initialMediaPlaybackPolicy = AutoMediaPlaybackPolicy.requireUserActionForAllMediaTypes,
     this.onPageStarted,
     this.onPageFinished,
     this.navigationDelegate,
@@ -143,8 +140,7 @@ class _WebViewXState extends State<WebViewX> {
   void initState() {
     super.initState();
 
-    if (Platform.isAndroid &&
-        widget.mobileSpecificParams.androidEnableHybridComposition) {
+    if (Platform.isAndroid && widget.mobileSpecificParams.androidEnableHybridComposition) {
       wf.WebView.platform = wf.SurfaceAndroidWebView();
     }
 
@@ -158,13 +154,11 @@ class _WebViewXState extends State<WebViewX> {
         ? wf.JavascriptMode.unrestricted
         : wf.JavascriptMode.disabled;
 
-    final initialMediaPlaybackPolicy = widget.initialMediaPlaybackPolicy ==
-            AutoMediaPlaybackPolicy.alwaysAllow
+    final initialMediaPlaybackPolicy = widget.initialMediaPlaybackPolicy == AutoMediaPlaybackPolicy.alwaysAllow
         ? wf.AutoMediaPlaybackPolicy.always_allow
         : wf.AutoMediaPlaybackPolicy.require_user_action_for_all_media_types;
 
-    void onWebResourceError(wf_pi.WebResourceError err) =>
-        widget.onWebResourceError!(
+    void onWebResourceError(wf_pi.WebResourceError err) => widget.onWebResourceError!(
           WebResourceError(
             description: err.description,
             errorCode: err.errorCode,
@@ -180,15 +174,13 @@ class _WebViewXState extends State<WebViewX> {
       wf.NavigationRequest request,
     ) async {
       if (widget.navigationDelegate == null) {
-        webViewXController.value =
-            webViewXController.value.copyWith(source: request.url);
+        webViewXController.value = webViewXController.value.copyWith(source: request.url);
         return wf.NavigationDecision.navigate;
       }
 
       final delegate = await widget.navigationDelegate!.call(
         NavigationRequest(
-          content: NavigationContent(
-              request.url, webViewXController.value.sourceType),
+          content: NavigationContent(request.url, webViewXController.value.sourceType),
           isForMainFrame: request.isForMainFrame,
         ),
       );
@@ -237,14 +229,12 @@ class _WebViewXState extends State<WebViewX> {
           javascriptMode: javascriptMode,
           onWebViewCreated: onWebViewCreated,
           javascriptChannels: javascriptChannels,
-          gestureRecognizers:
-              widget.mobileSpecificParams.mobileGestureRecognizers,
+          gestureRecognizers: widget.mobileSpecificParams.mobileGestureRecognizers,
           onPageStarted: widget.onPageStarted,
           onPageFinished: widget.onPageFinished,
           initialMediaPlaybackPolicy: initialMediaPlaybackPolicy,
           onWebResourceError: onWebResourceError,
-          gestureNavigationEnabled:
-              widget.mobileSpecificParams.gestureNavigationEnabled,
+          gestureNavigationEnabled: widget.mobileSpecificParams.gestureNavigationEnabled,
           debuggingEnabled: widget.mobileSpecificParams.debuggingEnabled,
           navigationDelegate: navigationDelegate,
           userAgent: widget.userAgent,

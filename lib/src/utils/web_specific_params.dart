@@ -1,5 +1,3 @@
-import 'package:webviewx/src/utils/css_loader.dart';
-import 'package:webviewx/src/utils/source_type.dart';
 import 'package:webviewx/src/utils/utils.dart';
 
 /// Parameters specific to the web version.
@@ -10,8 +8,7 @@ class WebSpecificParams {
   final List<BypassProxy> _proxyList;
 
   /// Gets normal or shuffled list, depending on `applyProxyLoadBalancing`
-  List<BypassProxy> get proxyList =>
-      applyProxyLoadBalancing ? (List.of(_proxyList)..shuffle()) : _proxyList;
+  List<BypassProxy> get proxyList => applyProxyLoadBalancing ? (List.of(_proxyList)..shuffle()) : _proxyList;
 
   /// If true the proxyList will be shuffled for every single call.
   /// This little bit of balancing will ensure that the proxies don't get

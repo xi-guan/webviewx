@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:js' as js;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -46,8 +45,7 @@ class WebViewX extends StatefulWidget implements view_interface.WebViewX {
   /// Callback which returns a referrence to the [WebViewXController]
   /// being created.
   @override
-  final Function(ctrl_interface.WebViewXController controller)?
-      onWebViewCreated;
+  final Function(ctrl_interface.WebViewXController controller)? onWebViewCreated;
 
   /// A set of [EmbeddedJsContent].
   ///
@@ -123,8 +121,7 @@ class WebViewX extends StatefulWidget implements view_interface.WebViewX {
     this.dartCallBacks = const {},
     this.ignoreAllGestures = false,
     this.javascriptMode = JavascriptMode.unrestricted,
-    this.initialMediaPlaybackPolicy =
-        AutoMediaPlaybackPolicy.requireUserActionForAllMediaTypes,
+    this.initialMediaPlaybackPolicy = AutoMediaPlaybackPolicy.requireUserActionForAllMediaTypes,
     this.onPageStarted,
     this.onPageFinished,
     this.navigationDelegate,
@@ -163,8 +160,7 @@ class _WebViewXState extends State<WebViewX> {
 
     if (widget.initialSourceType == SourceType.html ||
         widget.initialSourceType == SourceType.urlBypass ||
-        (widget.initialSourceType == SourceType.url &&
-            widget.initialContent == 'about:blank')) {
+        (widget.initialSourceType == SourceType.url && widget.initialContent == 'about:blank')) {
       _connectJsToFlutter(then: _callOnWebViewCreatedCallback);
     } else {
       _callOnWebViewCreatedCallback();
@@ -219,7 +215,7 @@ class _WebViewXState extends State<WebViewX> {
 
       then?.call();
 
-      /* 
+      /*
       // Registering the same events as we already do inside
       // HtmlUtils.embedClickListenersInPageSource(), but in Dart.
       // So far it seems to be working, but needs more testing.
@@ -364,8 +360,7 @@ class _WebViewXState extends State<WebViewX> {
 
     final allow = widget.webSpecificParams.additionalAllowOptions;
 
-    if (widget.initialMediaPlaybackPolicy ==
-        AutoMediaPlaybackPolicy.alwaysAllow) {
+    if (widget.initialMediaPlaybackPolicy == AutoMediaPlaybackPolicy.alwaysAllow) {
       allow.add('autoplay');
     }
 
@@ -461,8 +456,7 @@ class _WebViewXState extends State<WebViewX> {
     final href = dartObj['href'] as String;
     _debugLog(dartObj.toString());
 
-    if (!await _checkNavigationAllowed(
-        href, webViewXController.value.sourceType)) {
+    if (!await _checkNavigationAllowed(href, webViewXController.value.sourceType)) {
       _debugLog('Navigation not allowed for source:\n$href\n');
       return;
     }

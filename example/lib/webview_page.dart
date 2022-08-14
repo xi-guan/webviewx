@@ -59,7 +59,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
               ),
               Expanded(
                 child: Scrollbar(
-                  isAlwaysShown: true,
+                  thumbVisibility: true,
                   child: SizedBox(
                     width: min(screenSize.width * 0.8, 512),
                     child: ListView(
@@ -83,17 +83,14 @@ class _WebViewXPageState extends State<WebViewXPage> {
       height: screenSize.height / 2,
       width: min(screenSize.width * 0.8, 1024),
       onWebViewCreated: (controller) => webviewController = controller,
-      onPageStarted: (src) =>
-          debugPrint('A new page has started loading: $src\n'),
-      onPageFinished: (src) =>
-          debugPrint('The page has finished loading: $src\n'),
+      onPageStarted: (src) => debugPrint('A new page has started loading: $src\n'),
+      onPageFinished: (src) => debugPrint('The page has finished loading: $src\n'),
       jsContent: const {
         EmbeddedJsContent(
           js: "function testPlatformIndependentMethod() { console.log('Hi from JS') }",
         ),
         EmbeddedJsContent(
-          webJs:
-              "function testPlatformSpecificMethod(msg) { TestDartCallback('Web callback says: ' + msg) }",
+          webJs: "function testPlatformSpecificMethod(msg) { TestDartCallback('Web callback says: ' + msg) }",
           mobileJs:
               "function testPlatformSpecificMethod(msg) { TestDartCallback.postMessage('Mobile callback says: ' + msg) }",
         ),
@@ -202,8 +199,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
 
   Future<void> _callPlatformSpecificJsMethod() async {
     try {
-      await webviewController
-          .callJsMethod('testPlatformSpecificMethod', ['Hi']);
+      await webviewController.callJsMethod('testPlatformSpecificMethod', ['Hi']);
     } catch (e) {
       showAlertDialog(
         executeJsErrorMessage,
@@ -254,14 +250,12 @@ class _WebViewXPageState extends State<WebViewXPage> {
       ),
       buildSpace(direction: Axis.vertical, flex: false, amount: 20.0),
       createButton(
-        text:
-            'Change content to URL that allows iframes embedding\n(https://flutter.dev)',
+        text: 'Change content to URL that allows iframes embedding\n(https://flutter.dev)',
         onTap: _setUrl,
       ),
       buildSpace(direction: Axis.vertical, flex: false, amount: 20.0),
       createButton(
-        text:
-            'Change content to URL that doesnt allow iframes embedding\n(https://news.ycombinator.com/)',
+        text: 'Change content to URL that doesnt allow iframes embedding\n(https://news.ycombinator.com/)',
         onTap: _setUrlBypass,
       ),
       buildSpace(direction: Axis.vertical, flex: false, amount: 20.0),
@@ -291,8 +285,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
       ),
       buildSpace(direction: Axis.vertical, flex: false, amount: 20.0),
       createButton(
-        text:
-            'Call platform specific Js method, that calls back a Dart function',
+        text: 'Call platform specific Js method, that calls back a Dart function',
         onTap: _callPlatformSpecificJsMethod,
       ),
       buildSpace(direction: Axis.vertical, flex: false, amount: 20.0),
