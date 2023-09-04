@@ -3,9 +3,8 @@ import 'dart:async' show Future;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:webview_flutter/webview_flutter.dart' as wf;
-import 'package:webviewx/src/utils/utils.dart';
-
 import 'package:webviewx/src/controller/interface.dart' as i;
+import 'package:webviewx/src/utils/utils.dart';
 
 /// Mobile implementation
 class WebViewXController extends ChangeNotifier implements i.WebViewXController<wf.WebViewController> {
@@ -117,7 +116,7 @@ class WebViewXController extends ChangeNotifier implements i.WebViewXController<
   ) async {
     // This basically will transform a "raw" call (evaluateJavascript)
     // into a little bit more "typed" call, that is - calling a method.
-    final result = await connector.runJavascriptReturningResult(
+    final result = await connector.runJavaScriptReturningResult(
       HtmlUtils.buildJsFunction(name, params),
     );
 
@@ -125,7 +124,7 @@ class WebViewXController extends ChangeNotifier implements i.WebViewXController<
     //
     // In the mobile version responses from Js to Dart come wrapped in single quotes (')
     // The web works fine because it is already into it's native environment
-    return HtmlUtils.unQuoteJsResponseIfNeeded(result);
+    return HtmlUtils.unQuoteJsResponseIfNeeded(result as String);
   }
 
   /// This function allows you to evaluate 'raw' javascript (e.g: 2+2)
@@ -140,7 +139,7 @@ class WebViewXController extends ChangeNotifier implements i.WebViewXController<
     String rawJavascript, {
     bool inGlobalContext = false, // NO-OP HERE
   }) {
-    return connector.runJavascriptReturningResult(rawJavascript);
+    return connector.runJavaScriptReturningResult(rawJavascript);
   }
 
   /// Returns the current content
@@ -202,13 +201,13 @@ class WebViewXController extends ChangeNotifier implements i.WebViewXController<
   /// Get scroll position on X axis
   @override
   Future<int> getScrollX() {
-    return connector.getScrollX();
+    return connector.getScrollPosition().then((value) => value.dx.toInt());
   }
 
   /// Get scroll position on Y axis
   @override
   Future<int> getScrollY() {
-    return connector.getScrollY();
+    return connector.getScrollPosition().then((value) => value.dy.toInt());
   }
 
   /// Scrolls by `x` on X axis and by `y` on Y axis

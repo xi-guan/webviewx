@@ -3,3 +3,4 @@ linter:
   rules:
     # Disable
     use_build_context_synchronously: false
+    ibrary_private_types_in_public_api: false

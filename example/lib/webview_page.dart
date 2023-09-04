@@ -2,8 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:webviewx/webviewx.dart';
-
-import 'helpers.dart';
+import 'package:webviewx_example/helpers.dart';
 
 class WebViewXPage extends StatefulWidget {
   const WebViewXPage({
@@ -11,10 +10,10 @@ class WebViewXPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _WebViewXPageState createState() => _WebViewXPageState();
+  WebViewXPageState createState() => WebViewXPageState();
 }
 
-class _WebViewXPageState extends State<WebViewXPage> {
+class WebViewXPageState extends State<WebViewXPage> {
   late WebViewXController webviewController;
   final initialContent =
       '<h4> This is some hardcoded HTML code embedded inside the webview <h4> <h2> Hello world! <h2>';
@@ -47,7 +46,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: Text(
                   'Play around with the buttons below',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
               buildSpace(direction: Axis.vertical, amount: 10.0, flex: false),
@@ -99,7 +98,7 @@ class _WebViewXPageState extends State<WebViewXPage> {
         DartCallback(
           name: 'TestDartCallback',
           callBack: (msg) => showSnackBar(msg.toString(), context),
-        )
+        ),
       },
       webSpecificParams: const WebSpecificParams(
         printDebugInfo: true,
