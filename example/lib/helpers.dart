@@ -35,10 +35,7 @@ void showSnackBar(String content, BuildContext context) {
     );
 }
 
-Widget createButton({
-  VoidCallback? onTap,
-  required String text,
-}) {
+Widget createButton({VoidCallback? onTap, required String text}) {
   return ElevatedButton(
     onPressed: onTap,
     style: ElevatedButton.styleFrom(

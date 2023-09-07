@@ -5,9 +5,7 @@ import 'package:webviewx/webviewx.dart';
 import 'package:webviewx_example/helpers.dart';
 
 class WebViewXPage extends StatefulWidget {
-  const WebViewXPage({
-    Key? key,
-  }) : super(key: key);
+  const WebViewXPage({Key? key}) : super(key: key);
 
   @override
   WebViewXPageState createState() => WebViewXPageState();
@@ -21,6 +19,7 @@ class WebViewXPageState extends State<WebViewXPage> {
       'Failed to execute this task because the current content is (probably) URL that allows iframe embedding, on Web.\n\n'
       'A short reason for this is that, when a normal URL is embedded in the iframe, you do not actually own that content so you cant call your custom functions\n'
       '(read the documentation to find out why).';
+  final ScrollController _controller = ScrollController();
 
   Size get screenSize => MediaQuery.of(context).size;
 
@@ -33,9 +32,7 @@ class WebViewXPageState extends State<WebViewXPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('WebViewX Page'),
-      ),
+      appBar: AppBar(title: const Text('WebViewX Page')),
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
@@ -58,10 +55,12 @@ class WebViewXPageState extends State<WebViewXPage> {
               ),
               Expanded(
                 child: Scrollbar(
+                  controller: _controller,
                   thumbVisibility: true,
                   child: SizedBox(
                     width: min(screenSize.width * 0.8, 512),
                     child: ListView(
+                      controller: _controller,
                       children: _buildButtons(),
                     ),
                   ),
@@ -216,11 +215,7 @@ class WebViewXPageState extends State<WebViewXPage> {
     }
   }
 
-  Widget buildSpace({
-    Axis direction = Axis.horizontal,
-    double amount = 0.2,
-    bool flex = true,
-  }) {
+  Widget buildSpace({Axis direction = Axis.horizontal, double amount = 0.2, bool flex = true}) {
     return flex
         ? Flexible(
             child: FractionallySizedBox(
