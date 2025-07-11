@@ -11,13 +11,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.1
-  path: ^1.9.0
-  pointer_interceptor: ^0.10.1
-  uuid: ^4.4.0
-  webview_flutter: ^4.7.0
+  http: ^1.4.0
+  path: ^1.9.1
+  pointer_interceptor: ^0.10.1+2
+  uuid: ^4.5.1
+  webview_flutter: ^4.13.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  lint: ^2.3.0
+  lint: ^2.8.0
