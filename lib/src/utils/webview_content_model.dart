@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:webviewx/src/utils/source_type.dart';
 
 /// Model class for webview's content
@@ -42,7 +41,7 @@ class WebViewContent {
   String toString() {
     return 'WebViewContent:\n'
         'Source: $source\n'
-        'SourceType: ${describeEnum(sourceType)}\n'
+        'SourceType: ${sourceType.name}\n'
         'Last request Headers: ${headers ?? 'none'}\n'
         'Last request Body: ${webPostRequestBody ?? 'none'}\n';
   }
@@ -57,9 +56,5 @@ class WebViewContent {
           other.webPostRequestBody == webPostRequestBody);
 
   @override
-  int get hashCode =>
-      source.hashCode ^
-      sourceType.hashCode ^
-      headers.hashCode ^
-      webPostRequestBody.hashCode;
+  int get hashCode => source.hashCode ^ sourceType.hashCode ^ headers.hashCode ^ webPostRequestBody.hashCode;
 }

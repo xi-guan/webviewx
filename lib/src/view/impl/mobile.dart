@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart' as wf;
 // Import for Android features.
@@ -169,45 +167,6 @@ class _WebViewXState extends State<WebViewX> {
             // failingUrl: err.failingUrl,
           ),
         );
-
-    FutureOr<wf.NavigationDecision> navigationDelegate(
-      wf.NavigationRequest request,
-    ) async {
-      if (widget.navigationDelegate == null) {
-        webViewXController.value = webViewXController.value.copyWith(source: request.url);
-        return wf.NavigationDecision.navigate;
-      }
-
-      final delegate = await widget.navigationDelegate!.call(
-        NavigationRequest(
-          content: NavigationContent(request.url, webViewXController.value.sourceType),
-          isForMainFrame: request.isMainFrame,
-        ),
-      );
-
-      switch (delegate) {
-        case NavigationDecision.navigate:
-          // When clicking on an URL, the sourceType stays the same.
-          // That's because you cannot move from URL to HTML just by clicking.
-          // Also we don't take URL_BYPASS into consideration because it has no effect here in mobile
-          webViewXController.value = webViewXController.value.copyWith(
-            source: request.url,
-          );
-          return wf.NavigationDecision.navigate;
-        case NavigationDecision.prevent:
-          return wf.NavigationDecision.prevent;
-      }
-    }
-
-    void onWebViewCreated(wf.WebViewController webViewController) {
-      originalWebViewController = webViewController;
-
-      webViewXController.connector = originalWebViewController;
-      // Calls onWebViewCreated to pass the refference upstream
-      if (widget.onWebViewCreated != null) {
-        widget.onWebViewCreated!(webViewXController);
-      }
-    }
 
     late final wf_pi.PlatformWebViewControllerCreationParams params;
     if (wf_pi.WebViewPlatform.instance is wf_wkwebview.WebKitWebViewPlatform) {
